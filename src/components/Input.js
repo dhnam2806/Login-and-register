@@ -12,7 +12,7 @@ const Input = ({label,placeholder, ...rest}) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginBottom: 20,
+    marginTop: 20,
   },
   input: {
     borderBottomWidth: 1,

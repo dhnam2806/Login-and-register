@@ -3,10 +3,13 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import isValidate from '../components/Validation';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   return (
     <View style={styles.wrapper}>
       <View style={styles.header}>
@@ -21,17 +24,29 @@ const Login = () => {
           label="Email"
           placeholder={'example@gmail.com'}
           onChangeText={text => {
+            setEmailError(
+              isValidate(text, {isRequired: true, isEmail: true}) == true
+                ? ''
+                : 'Email is not valid',
+            );
             setEmail(text);
           }}
         />
+        <Text style={{color: 'red', fontSize: 16}}>{emailError}</Text>
         <Input
           label="Password"
           secureTextEntry={true}
           placeholder={'Enter your password'}
           onChangeText={text => {
+            setPasswordError(
+              isValidate(text, {isRequired: true, minLength: 6}) == true
+                ? ''
+                : 'Password must be at least 6 characters',
+            );
             setPassword(text);
           }}
         />
+        <Text style={{color: 'red', fontSize: 16}}>{passwordError}</Text>
         <TouchableOpacity
           onPress={() => {
             alert('Forgot Password?');
