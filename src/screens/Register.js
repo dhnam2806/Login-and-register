@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity, ScrollView} from 'react-native';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import isValidate from '../components/Validation';
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState();
+  const [nameError, setNameError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -22,15 +24,28 @@ const Login = () => {
     }
   };
   return (
-    <View style={styles.wrapper}>
+    <ScrollView style={styles.wrapper}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Already have account?</Text>
+        <Text style={styles.headerText}>Here your first step with us!</Text>
         <Image
           style={styles.logo}
           source={require('../assets/pngwing.com.png')}
         />
       </View>
       <View style={styles.body}>
+        <Input
+          label="Name"
+          placeholder={'Enter your name'}
+          onChangeText={text => {
+            setNameError(
+              isValidate(text, {isRequired: true, minLength: 2}) == true
+                ? ''
+                : 'Name cannot be empty',
+            );
+            setName(text);
+          }}
+        />
+        <Text style={{color: 'red', fontSize: 12}}>{nameError}</Text>
         <Input
           label="Email"
           placeholder={'example@gmail.com'}
@@ -66,63 +81,56 @@ const Login = () => {
         </TouchableOpacity>
         <Button
           disabled={!isValidateOke()}
-          title="Login"
+          title="Register"
           onPress={() => {
-            alert('email' + email + '  ' + 'password:' + password);
+            alert('name' + name + 'email' + email + '  ' + 'password:' + password);
           }}
         />
-        <TouchableOpacity>
-          <Text style={styles.signUpText}>Don't have account? Register Now</Text>
-        </TouchableOpacity>
       </View>
-        <View style={styles.footer}>
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 28}}>
-            <View style={{width: '30%', height: 1, backgroundColor: 'black'}} />
-            <Text style={{flex: 1, textAlign: 'center', color: 'black'}}>
-              Use other method?{' '}
-            </Text>
-            <View style={{width: '30%', height: 1, backgroundColor: 'black'}} />
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Icon
-              name="facebook-square"
-              size={36}
-              color={'#125db3'}
-              style={{margin: 24}}
-            />
-            <Icon
-              name="google"
-              size={36}
-              color={'#e84e3a'}
-              style={{margin: 24}}
-            />
-          </View>
+      <View style={styles.footer}>
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: 28}}>
+          <View style={{width: '30%', height: 1, backgroundColor: 'black'}} />
+          <Text style={{flex: 1, textAlign: 'center', color: 'black'}}>
+            Use other method?{' '}
+          </Text>
+          <View style={{width: '30%', height: 1, backgroundColor: 'black'}} />
         </View>
-    </View>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Icon
+            name="facebook-square"
+            size={36}
+            color={'#125db3'}
+            style={{margin: 24}}
+          />
+          <Icon
+            name="google"
+            size={36}
+            color={'#e84e3a'}
+            style={{margin: 24}}
+          />
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#34c6eb',
-    paddingHorizontal: 20,
-
-
+    backgroundColor: 'white',
   },
   header: {
     flex: 1,
+    paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
-
-
   },
   headerText: {
     flex: 1,
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#34c6eb',
   },
   logo: {
     width: 180,
@@ -130,18 +138,16 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 2,
+    marginTop: 8,
+    backgroundColor: '#34c6eb',
+    borderRadius: 25,
+    padding: 16,
+    marginHorizontal: 12,
     justifyContent: 'center',
-  },
-  signUpText: {
-    textAlign: 'center',
-    marginTop: 12,
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
   },
   footer: {
     flex: 1,
   },
 });
 
-export default Login;
+export default Register;

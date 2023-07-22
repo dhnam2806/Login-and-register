@@ -18,7 +18,7 @@ const Button = ({title, ...rest}) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: 36,
+    marginTop: 28,
     backgroundColor: '#fff',
     paddingVertical: 12,
     borderRadius: 25,
